@@ -62,16 +62,19 @@ commanRouter.route('/userBooked')
       else
          meetId = data
          for (i= 0 ; i<meetId.length; i++){
-             var searchId = (meetId[i].meetingId);
-               console.log(searchId);
-                        Categories.find({"meetUpId":searchId}, function (err, datas) {
-                          if (err) 
-                              res.status(500).send(err);
+              var searchId = (meetId[i].meetingId);
+              console.log(searchId);
+              var data = [];
+              Categories.find({"meetUpId":searchId}, function (err, datas) {
+                if (err) {
+                    res.status(500).send(err);
+                     return;
+                } else {
+                     data.push(datas);
+                }
+                res.json({"List":data});
 
-                          //console.log('%s %s is a %s.', datas)
-                          res.json({"List":datas});
-// Space Ghost is a talk show host.
-})
+               })
         
         }
     })
